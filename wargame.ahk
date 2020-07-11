@@ -11,18 +11,28 @@ global changeAltitudeKey="o"
 global firePositionKey="t"
 global smokePositionKey="g"
 
-global unitLabelPosition:={x:200, y:500}
+global unitLabelPosition:={x:370, y:910}
 
 global gunQuantity
 
 ; hotkeys
 #IfWinActive ahk_exe wargame3.exe
-^RButton Up::Send %attackMoveKey%{LButton}
-+^RButton Up::Send %attackMoveKey%+{LButton}
-!RButton Up::Send %reverseKey%{LButton}
-+!RButton Up::Send %reverseKey%+{LButton}
-NumpadDot Up::Send %moveFastKey%{LButton} ; quickfire mouse button
-NumpadDel Up::Send %moveFastKey%+{LButton} ; quickfire mouse button
+^RButton::
++^RButton::Send %attackMoveKey%
+!RButton::
++!RButton::Send %reverseKey%
+XButton1::
++XButton1::Send %moveFastKey%
+XButton2::
++XButton2::Send %firePositionKey%
+^RButton Up:: 
+!RButton Up::
+XButton1 Up::
+XButton2 Up::Send {LButton}
++^RButton Up::
++!RButton Up::
++XButton1 Up::
++XButton2 Up::Send +{LButton}
 
 ^e::SendInput %toggleGunsKey%
 ^t::HE1Gun()
@@ -147,5 +157,7 @@ generateNextPoint(startPoint, delta, i){
 }
 
 deselectTopUnit(){
-    Send +{Click, 385, 925}
+    x:= % unitLabelPosition.x
+    y:= % unitLabelPosition.y
+    Send +{Click %x%, %y%}
 }
