@@ -33,13 +33,11 @@ autoGather(){
 }
 
 ensureWindowActive(){
-    SoundBeep
-    Sleep 500
     WinActivate ahk_exe EliteDangerous64.exe
 }
 
 openPowerContact(){
-    Send s{Space}
+    Send ddsa{Space}
     Sleep 1500
 }
 

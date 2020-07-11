@@ -11,18 +11,20 @@ global commoditiesPanelBottomHold=4500
 
 global bookmarksPoint={X:158, Y:255}
 
-global station1={Bookmark: {X:135, Y:380}
-    , Plot:{X:415, Y:300}
-    , SuperCruiseNav: "s"
-    , SuperCruiseWait: 90000
-    , SelectSellCommodity: Func("station1SelectSellCommodity")
-    , SelectBuyCommodity: Func("station1SelectBuyCommodity")}
-global station2={Bookmark: {X:130, Y:408}
+global station1={Bookmark: {X:130, Y:410}
     , Plot:{X:415, Y:325}
     , SuperCruiseNav: "ss"
+    , SuperCruiseWait: 200000
+    , SelectSellCommodity: Func("station1SelectSellCommodity")
+    , SelectBuyCommodity: Func("station1SelectBuyCommodity")
+    , isOrbital: True}
+global station2={Bookmark: {X:130, Y:520}
+    , Plot:{X:415, Y:440}
+    , SuperCruiseNav: "www"
     , SuperCruiseWait: 100000
     , SelectSellCommodity: Func("station2SelectSellCommodity")
-    , SelectBuyCommodity: Func("station2SelectBuyCommodity")}
+    , SelectBuyCommodity: Func("station2SelectBuyCommodity")
+    , isOrbital: False}
 global stations= [station1, station2]
 
 station1SelectSellCommodity(){
@@ -31,12 +33,14 @@ station1SelectSellCommodity(){
 }
 
 station1SelectBuyCommodity(){
-    Send {s 16}{Space}
+    scrollToCommodityPanelBottom()
+    Send {w 3}{Space}
     Sleep 500
 }
 
 station2SelectSellCommodity(){
-    Send {s 16}{Space}
+    scrollToCommodityPanelBottom()
+    Send {w 11}{Space}
     Sleep 500
 }
 
@@ -47,7 +51,7 @@ station2SelectBuyCommodity(){
 
 ; variables
 global stationIndex=1
-global twoWay=True
+global twoWay=False
 
 ; hotkeys
 #IfWinActive ahk_exe EliteDangerous64.exe
@@ -55,7 +59,7 @@ global twoWay=True
 ^9::test()
 
 test(){
-    navigateToNextStation()
+    trade(2)
 }
 
 ;hot actions
@@ -86,8 +90,12 @@ toggleNavMenu(){
 }
 
 autoDock(){
-    engineBoost()
-    Sleep 3000
+    if(stations[stationIndex].isOrbital){
+        engineBoost()
+        Sleep 3000
+    } else
+        KeyWait, 0
+
     Send {F1}qd{Space}{F1}x
     Sleep %autodockWait%
     SoundBeep
@@ -118,6 +126,7 @@ openStationServices(){
 openComodities(){
     Send s{Space}
     Sleep 1200
+    SoundBeep
 }
 
 sell(stationIndex){
@@ -129,7 +138,7 @@ sell(stationIndex){
 
 openSell(){
     Send s{Space}
-    Sleep 500
+    Sleep 1000
     Send d
 }
 
@@ -190,7 +199,11 @@ navigateToNextStation(){
 }
 
 incrementStationIndex(currentIndex){
-    stationIndex= % 3-currentIndex
+    stationIndex= otherIndex()
+}
+
+otherIndex(index){
+    return 3 - index
 }
 
 openGalaxyMap(){
@@ -217,8 +230,11 @@ clickPlotRoute(stationIndex){
 }
 
 manueverToJump(){
-    Sleep %autoLaunchWait%
-    engineBoost()
-    engineBoost()
-    Send j
+    if(stations[otherIndex(stationIndex)].isOrbital){
+        Sleep %autoLaunchWait%
+        engineBoost()
+        engineBoost()
+        Send '
+    }else
+        Send {F6}
 }
