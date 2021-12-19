@@ -34,8 +34,8 @@
 \* AutoHotkey support
 
 # command teams
-1. 
-2. 
+1. main effort
+2. supporting effort
 3. 
 4. mortars
 5. howitzers
