@@ -1,22 +1,24 @@
 #SingleInstance force
 ; constants
-global attackMoveKey="i"
-global reverseKey="]"
-global moveFastKey=";"
-global toggleGunsKey="y"
-global regroupKey="p"
-global spreadKey="u"
-global landKey="["
-global changeAltitudeKey="o"
-global firePositionKey="t"
-global smokePositionKey="g"
+global attackMoveKey="c"
+global reverseKey="="
+global moveFastKey="z"
+global toggleGunsKey="f"
+global regroupKey="l"
+global spreadKey="g"
+global landKey="/"
+global changeAltitudeKey="r"
+global firePositionKey="p"
+global smokePositionKey=";"
 
-global unitLabelPosition:={x:370, y:910}
+global unitLabelPosition:={x:600, y:930}
 
 global gunQuantity
 
 ; hotkeys
-#IfWinActive ahk_exe wargame3.exe
+GroupAdd, wargame, ahk_exe wargame.exe
+GroupAdd, wargame, ahk_exe wargame3.exe
+#IfWinActive ahk_group wargame
 ^RButton::
 +^RButton::Send %attackMoveKey%
 !RButton::
@@ -34,20 +36,20 @@ XButton2 Up::Send {LButton}
 +XButton1 Up::
 +XButton2 Up::Send +{LButton}
 
-^e::SendInput %toggleGunsKey%
-^t::HE1Gun()
-!t::linearHEMission()
-^g::smoke1Gun()
-!g::linearSmokeMission()
+^.::SendInput %toggleGunsKey%
+^p::HE1Gun()
+!p::linearHEMission()
+^;::smoke1Gun()
+!;::linearSmokeMission()
 ^`::setGunQuantity()
-^x::SendInput %regroupKey%
-+^x::SendInput +%regroupKey%
-!x::SendInput %spreadKey%
-+!x::SendInput +%spreadKey%`
-^c::SendInput %landKey%
-+^c::SendInput +%landKey%
-!c::SendInput %changeAltitudeKey%
-+!c::SendInput +%changeAltitudeKey%
+^q::SendInput %regroupKey%
++^q::SendInput +%regroupKey%
+!q::SendInput %spreadKey%
++!q::SendInput +%spreadKey%`
+^j::SendInput %landKey%
++^j::SendInput +%landKey%
+!j::SendInput %changeAltitudeKey%
++!j::SendInput +%changeAltitudeKey%
 
 
 ;hot actions
