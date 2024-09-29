@@ -6,6 +6,7 @@ SetMouseDelay 100, 30
 global powerPlayCommodityInterval=1800000
 global fullMediaPause=2000
 global ppTestInterval=10000
+global openPowerContactDelay = 1500
 
 ; hotkeys
 #IfWinActive ahk_exe EliteDangerous64.exe
@@ -23,12 +24,10 @@ autoGather(){
     Loop{
         ensureWindowActive()
 
-        openPowerContact()
         selectMedia()
-        takeAllMedia()s
-        exitMenu()
-        exitMenu()
+        takeAllMedia()
         Sleep %powerPlayCommodityInterval%
+        exitMenu()
     }
 }
 
@@ -37,22 +36,20 @@ ensureWindowActive(){
 }
 
 openPowerContact(){
-    Send ddsa{Space}
-    Sleep 1500
+    Send {Space}
+    Sleep openPowerContactDelay
 }
 
 selectMedia(){
-    Send ss
+    Send oo{Space}
 }
 
 takeAllMedia(){
-    Send {d Down}
+    Send {e Down}
     Sleep %fullMediaPause%
-    Send {d Up}{Space}
-    Send 1500
+    Send {e Up}{Space}
 }
 
 exitMenu(){
     Send {BackSpace}
-    Sleep 1000
 }
