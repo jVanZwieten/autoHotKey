@@ -1,55 +1,65 @@
 #SingleInstance force
-SetKeyDelay, 200, 30
-SetMouseDelay 100, 30
 
 ; constants
 global powerPlayCommodityInterval=1800000
-global fullMediaPause=2000
-global ppTestInterval=10000
+global fullCommodityPause=1500
 global openPowerContactDelay = 1500
+global hardPressDelay = 200
 
 ; hotkeys
 #IfWinActive ahk_exe EliteDangerous64.exe
-^0::autoGather()
-^9::test()
+    ^0::autoGather()
+    ^9::reminder()
 
-test(){
-    Sleep 1000
-    WinActivate ahk_exe EliteDangerous64.exe
-    Send s
-}
-
-;hot actions
-autoGather(){
-    Loop{
-        ensureWindowActive()
-
-        selectMedia()
-        takeAllMedia()
-        Sleep %powerPlayCommodityInterval%
-        exitMenu()
+    test(){
+        SoundBeep
+        Send {Space Down}
+        Sleep 500
+        Send {Space Up}
     }
-}
 
-ensureWindowActive(){
-    WinActivate ahk_exe EliteDangerous64.exe
-}
+    reminder(){
+        Loop{
+            SoundBeep
+            Sleep, %powerPlayCommodityInterval%
+        }
+    }
 
-openPowerContact(){
-    Send {Space}
-    Sleep openPowerContactDelay
-}
+    ;hot actions
+    autoGather(){
+        SetKeyDelay, % hardPressDelay, hardPressDelay
+        Loop{
+            WinActivate ahk_exe EliteDangerous64.exe
 
-selectMedia(){
-    Send oo{Space}
-}
+            openPowerplay()
+            selectCommodity()
+            takeAllCommodity()
+            resetPowerplayPanel()
+            Sleep %powerPlayCommodityInterval%
+        }
+    }
 
-takeAllMedia(){
-    Send {e Down}
-    Sleep %fullMediaPause%
-    Send {e Up}{Space}
-}
+    openPowerplay(){
+        Send, {Space}
+        Sleep %openPowerContactDelay%
+    }
 
-exitMenu(){
-    Send {BackSpace}
-}
+    selectCommodity(){
+        Send o
+    }
+
+    takeAllCommodity(){
+        holdFor("e", fullCommodityPause)
+        Send, {Space}
+        Sleep 1500
+    }
+
+    resetPowerplayPanel(){
+        Send {BackSpace}{BackSpace}
+    }
+
+    holdFor(key, duration){
+        Send {%key% down}
+        Sleep % duration
+        Send {%key% up}
+    }
