@@ -2,36 +2,38 @@
 ## mouse
 * `Lclick`: select
 * `Rclick`: move
-* `ctrl + Rclick`: attack move
-* `alt + Rclick`: reverse*
-* `fire button`: fast move
+* `ctrl + Rclick`: attack move*+
+* `alt + Rclick`: reverse*+
+* `fire button`: fast move+
 
 ## keyboard
 * `wasd` : map movement
-* `q`: 
+* `q`: change focus
 * `e`: stop
 * `ctrl+e`: toggle guns*
-* `r`: 
-* `t`: fire position
-* `ctrl+t`: fire 1 gun*
-* `alt+t`: linear fire mission*
+* `alt+e`: toggle radar*
+* `r`: fire position
+* `t`: 
+* `ctrl+r`: fire 1 gun*
+* `alt+r`: linear fire mission*
 * `f`: unload
-* `g`: smoke position
+* `ctrl+f`: land*
+* `alt+f`: change altitude*
+* `g`: 
 * `ctrl+g`: smoke 1 gun*
 * `alt+g`: linear smoke mission*
-* `z`: 
+* `z`: smoke position
 * `x`: split
-* `ctrl+x`: regroup*
+* `ctrl+x`: regroup*+
 * `alt+x`: spread*
 * `c`: evacuate
-* `ctrl+c`: land*
-* `alt+c`: change altitude*
-* `v`: cycle 
+* `v`:  
 * `` ` `` : deployment menu
-* ``ctrl+` ``: turn off radar aa
+* ``ctrl+` ``: set gun number
 * `tab`: unit info
 
 \* AutoHotkey support
+\+ shift-queue enabled
 
 # command teams
 1. main effort

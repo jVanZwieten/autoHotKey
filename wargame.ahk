@@ -1,19 +1,24 @@
 #SingleInstance force
 ; constants
-global attackMoveKey="c"
-global reverseKey="="
-global moveFastKey="z"
-global toggleGunsKey="f"
-global regroupKey="l"
-global spreadKey="g"
-global landKey="/"
-global changeAltitudeKey="r"
-global firePositionKey="p"
-global smokePositionKey=";"
+global attackMoveKey="i"
+global reverseKey="]"
+global moveFastKey="/"
+global toggleGunsKey="y"
+global regroupKey="p"
+global spreadKey="u"
+global landKey="["
+global changeAltitudeKey="o"
+global firePositionKey="r"
+global smokePositionKey="z"
 
 global unitLabelPosition:={x:600, y:930}
+global radarGroupNumber:=7
+global radarOnFrequency:=600
+global radarOffFrequency:=440
 
+; variables
 global gunQuantity
+global radarStatus:=true
 
 ; hotkeys
 GroupAdd, wargame, ahk_exe wargame.exe
@@ -24,32 +29,37 @@ GroupAdd, wargame, ahk_exe wargame3.exe
 !RButton::
 +!RButton::Send %reverseKey%
 XButton1::
-+XButton1::Send %moveFastKey%
++XButton1::
+^!RButton::
++!^RButton::Send %moveFastKey%
 XButton2::
 +XButton2::Send %firePositionKey%
 ^RButton Up:: 
 !RButton Up::
 XButton1 Up::
-XButton2 Up::Send {LButton}
+XButton2 Up::
+^!RButton Up::Send {LButton}
 +^RButton Up::
 +!RButton Up::
 +XButton1 Up::
-+XButton2 Up::Send +{LButton}
++XButton2 Up::
++!^RButton Up::Send +{LButton}
 
-^.::SendInput %toggleGunsKey%
-^p::HE1Gun()
-!p::linearHEMission()
-^;::smoke1Gun()
-!;::linearSmokeMission()
+^e::SendInput %toggleGunsKey%
+!e::toggleRadar()
+^r::HE1Gun()
+!r::linearHEMission()
+^z::smoke1Gun()
+!z::linearSmokeMission()
 ^`::setGunQuantity()
-^q::SendInput %regroupKey%
-+^q::SendInput +%regroupKey%
-!q::SendInput %spreadKey%
-+!q::SendInput +%spreadKey%`
-^j::SendInput %landKey%
-+^j::SendInput +%landKey%
-!j::SendInput %changeAltitudeKey%
-+!j::SendInput +%changeAltitudeKey%
+^x::SendInput %regroupKey%
++^x::SendInput +%regroupKey%
+!x::SendInput %spreadKey%
++!x::SendInput +%spreadKey%`
+^f::SendInput %landKey%
++^f::SendInput +%landKey%
+!f::SendInput %changeAltitudeKey%
++!f::SendInput +%changeAltitudeKey%
 
 
 ;hot actions
@@ -66,7 +76,7 @@ smoke1Gun(){
 }
 
 linearSmokeMission(){
-        linearFireMission("smoke")
+    linearFireMission("smoke")
 }
 
 setGunQuantity(){
@@ -162,4 +172,19 @@ deselectTopUnit(){
     x:= % unitLabelPosition.x
     y:= % unitLabelPosition.y
     Send +{Click %x%, %y%}
+}
+
+toggleRadar(){
+    SendInput, %radarGroupNumber%
+    Sleep, 50
+
+    SendInput, %toggleGunsKey%
+    radarStatus:=!radarStatus
+    if(radarStatus)
+        f:= radarOnFrequency
+    else
+        f:= radarOffFrequency
+    SoundBeep, f
+
+    SendInput, 1
 }

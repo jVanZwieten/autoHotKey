@@ -45,11 +45,11 @@ global hardPressDelay = 200
     }
 
     selectCommodity(){
-        Send o
+        Send s
     }
 
     takeAllCommodity(){
-        holdFor("e", fullCommodityPause)
+        holdFor("d", fullCommodityPause)
         Send, {Space}
         Sleep 1500
     }
