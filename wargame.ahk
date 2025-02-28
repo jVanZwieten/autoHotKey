@@ -185,6 +185,4 @@ toggleRadar(){
     else
         f:= radarOffFrequency
     SoundBeep, f
-
-    SendInput, 1
 }
