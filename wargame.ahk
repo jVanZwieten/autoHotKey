@@ -67,10 +67,6 @@ HE1Gun(){
     fire1AtMouse("HE")
 }
 
-linearHEMission(){
-    linearFireMission("HE")
-}
-
 smoke1Gun(){
     fire1AtMouse("smoke")
 }
